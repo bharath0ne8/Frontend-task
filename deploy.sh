@@ -1,29 +1,30 @@
 #!/bin/bash
-set -e   # Exit immediately if a command fails
+set -e  # Exit immediately if any command fails
 
 echo "Starting deployment..."
 
-# List current files
-ls
-
-# Install dependencies (force to avoid conflicts)
+# 1️⃣ Install dependencies
 npm ci
 
-# Build React app
+# 2️⃣ Build React app
 npm run build
 
-# Archive build artifacts
+# 3️⃣ Archive build artifacts (optional)
 BUILD_ARCHIVE="${JOB_NAME}_${GIT_BRANCH//\//_}.tar.gz"
 tar -czvf "$BUILD_ARCHIVE" build
 
-# Optional: print git user who triggered the build
+# 4️⃣ Deploy build files to target directory
+TARGET_DIR="/var/www/html/Frontend-task"
+mkdir -p "$TARGET_DIR"
+cp -r build/* "$TARGET_DIR"
+echo "Build files deployed to $TARGET_DIR"
+
+# 5️⃣ Restart Nginx to serve updated files
+echo "Restarting Nginx..."
+sudo systemctl reload nginx
+echo "Nginx restarted successfully!"
+
+# 6️⃣ Optional: print Git committer info
 echo "Hello, ${GIT_COMMITTER_NAME:-unknown user}!"
 
-# List files after build
-ls
-
 echo "Deployment script completed successfully!"
-<<<<<<< HEAD
-=======
-
->>>>>>> e799c2f2 (script)
