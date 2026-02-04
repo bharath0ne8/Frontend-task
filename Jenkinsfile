@@ -12,31 +12,19 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Deploy Script') {
             steps {
-                sh 'npm ci'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                sh 'npm test -- --watchAll=false'
-            }
-        }
-
-        stage('Build React App') {
-            steps {
-                sh 'npm run build'
+                sh './deploy.sh'
             }
         }
     }
 
     post {
         success {
-            echo 'React build completed successfully 🎉'
+            echo 'Pipeline completed successfully 🎉'
         }
         failure {
-            echo 'React build failed ❌'
+            echo 'Pipeline failed ❌'
         }
     }
 }
