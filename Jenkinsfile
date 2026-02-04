@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'node-18'
-    }
-
     environment {
         CI = 'true'
     }
@@ -44,4 +40,3 @@ pipeline {
         }
     }
 }
-
