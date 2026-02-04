@@ -23,3 +23,7 @@ echo "Hello, ${GIT_COMMITTER_NAME:-unknown user}!"
 ls
 
 echo "Deployment script completed successfully!"
+<<<<<<< HEAD
+=======
+
+>>>>>>> e799c2f2 (script)
